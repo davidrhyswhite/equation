@@ -1,7 +1,13 @@
 [package]
 name = "equation"
-version = "0.1.0"
+version = "0.0.0"
 edition = "2021"
+authors = ["David White"]
+description = "A Rust library for mathematical expression evaluation and simplification"
+keywords = ["math", "evaluation", "simplify", "algebra", "expression"]
+license = "MIT OR Apache-2.0"
+documentation = "https://docs.rs/equation"
+repository = "https://github.com/davidrhyswhite/equation"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
