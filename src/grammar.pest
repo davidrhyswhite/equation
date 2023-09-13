@@ -1,0 +1,19 @@
+integer = @{ ASCII_DIGIT+ }
+
+primary = _{ integer | "(" ~ expr ~ ")" }
+
+mul_div_op = _{ multiply | divide }
+    multiply = { "*" }
+    divide = { "/" }
+
+add_sub_op = _{ add | subtract }
+    add = { "+" }
+    subtract = { "-" }
+
+term = { primary ~ (mul_div_op ~ primary)* }
+
+expr = { term ~ (add_sub_op ~ term)* }
+
+equation = _{ SOI ~ expr ~ EOI }
+
+WHITESPACE = _{ " " }

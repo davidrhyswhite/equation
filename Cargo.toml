@@ -1,6 +1,6 @@
 [package]
 name = "equation"
-version = "0.0.0"
+version = "0.1.0"
 edition = "2021"
 authors = ["David White"]
 description = "A Rust library for mathematical expression evaluation and simplification"
@@ -12,3 +12,5 @@ repository = "https://github.com/davidrhyswhite/equation"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
+pest = "2.7.3"
+pest_derive = "2.7.3"
