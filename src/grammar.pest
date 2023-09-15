@@ -1,19 +1,25 @@
+// An 'integer' matches one or more ASCII digits.
 integer = @{ ASCII_DIGIT+ }
 
-primary = _{ integer | "(" ~ expr ~ ")" }
+// A 'primary' matches either an 'integer' or an expression wrapped in parentheses.
+primary = _{ integer | "(" ~ expression ~ ")" }
 
-mul_div_op = _{ multiply | divide }
-    multiply = { "*" }
-    divide = { "/" }
+// 'operation' matches any one of the four basic arithmetic operations: add, subtract, multiply, or divide.
+operation = _{ add | subtract | multiply | divide }
+    // 'add' matches the addition operator.
+	add = { "+" }
+    // 'subtract' matches the subtraction operator.
+	subtract = { "-" }
+    // 'multiply' matches the multiplication operator.
+	multiply = { "*" }
+    // 'divide' matches the division operator.
+	divide = { "/" }
 
-add_sub_op = _{ add | subtract }
-    add = { "+" }
-    subtract = { "-" }
+// An 'expression' consists of a 'primary' followed by zero or more 'operation-primary' pairs.
+expression = { primary ~ (operation ~ primary)* }
 
-term = { primary ~ (mul_div_op ~ primary)* }
+// An 'equation' matches the start of input, followed by an 'expression', and then the end of input.
+equation = _{ SOI ~ expression ~ EOI }
 
-expr = { term ~ (add_sub_op ~ term)* }
-
-equation = _{ SOI ~ expr ~ EOI }
-
+// 'WHITESPACE' is used to capture and silently discard spaces.
 WHITESPACE = _{ " " }

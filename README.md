@@ -4,7 +4,7 @@ A Rust library for mathematical expression evaluation and simplification.
 
 ### TODO
 
-- [ ] Rewrite pest parsing as PrattParser;
+- [x] Rewrite pest parsing as PrattParser;
 - [ ] Modulo `%` & exponent `**` support;
 - [ ] Unary minus operator support;
 - [ ] Support fractions as `f32`;
