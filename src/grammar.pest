@@ -1,8 +1,11 @@
 // An 'integer' matches one or more ASCII digits.
 integer = @{ ASCII_DIGIT+ }
 
+// The - (unary minus) operator negates the value of the operand.
+unary_minus = { "-" }
+
 // A 'primary' matches either an 'integer' or an expression wrapped in parentheses.
-primary = _{ integer | "(" ~ expression ~ ")" }
+primary = _{ unary_minus? ~ ( integer | "(" ~ expression ~ ")" ) }
 
 // 'operation' matches any one of the four basic arithmetic operations: add, subtract, multiply, or divide.
 operation = _{ add | subtract | multiply | divide }

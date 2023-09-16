@@ -55,4 +55,16 @@ mod tests {
         let result = evaluate("6 + 1 + 2 * 2 + 1 + 1");
         assert_eq!(result, Ok(13));
     }
+
+    #[test]
+    fn it_works_with_negative_numbers() {
+        let result = evaluate("-1 + 2");
+        assert_eq!(result, Ok(1));
+    }
+
+    #[test]
+    fn it_works_with_more_negative_numbers() {
+        let result = evaluate("4 * -2");
+        assert_eq!(result, Ok(-8));
+    }
 }

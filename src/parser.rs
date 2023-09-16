@@ -32,6 +32,8 @@ fn retrieve_parser() -> PrattParser<Rule> {
         .op(Op::infix(Rule::add, Assoc::Left) | Op::infix(Rule::subtract, Assoc::Left))
         // Define multiplication and division as left associative operations.
         .op(Op::infix(Rule::multiply, Assoc::Left) | Op::infix(Rule::divide, Assoc::Left))
+        // Define the unary minus as a prefix operation
+        .op(Op::prefix(Rule::unary_minus))
 }
 
 /// Evaluates the primary component of an arithmetic expression.
@@ -89,6 +91,31 @@ fn infix_parser(lhs: i32, op: Pair<Rule>, rhs: i32) -> i32 {
         rule => unreachable!("parser expected infix operation, found {:?}", rule),
     }
 }
+/// Evaluates a prefix operation on an arithmetic value.
+///
+/// This function processes recognized unary prefix operations on the provided right-hand side value (`rhs`).
+/// Currently, it handles unary negation (`unary_minus`). If an unrecognized operation is encountered,
+/// the function will panic.
+///
+/// # Arguments
+///
+/// * `op` - A `Pair<Rule>` representing the prefix operation to be applied.
+/// * `rhs` - The right-hand side operand of the arithmetic expression. In the context of prefix operations,
+///           it's the value the operation is applied to.
+///
+/// # Returns
+///
+/// Returns the result of the prefix operation as an `i32`.
+///
+/// # Panics
+///
+/// This function will panic if the provided `op` does not match a recognized prefix operation.
+fn prefix_parser(op: Pair<Rule>, rhs: i32) -> i32 {
+    match op.as_rule() {
+        Rule::unary_minus => -rhs,
+        _ => unreachable!(),
+    }
+}
 
 /// Recursively evaluates an expression provided as a `Pair` of `Rule`.
 ///
@@ -105,5 +132,6 @@ pub fn parse_expression(pairs: Pairs<Rule>) -> i32 {
     retrieve_parser()
         .map_primary(primary_parser)
         .map_infix(infix_parser)
+        .map_prefix(prefix_parser)
         .parse(pairs)
 }

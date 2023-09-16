@@ -8,7 +8,7 @@ A Rust library for mathematical expression evaluation and simplification.
 
 - [x] Rewrite pest parsing as PrattParser;
 - [ ] Modulo `%` & exponent `**` support;
-- [ ] Unary minus operator support;
+- [x] Unary minus operator support;
 - [ ] Support fractions as `f32`;
 - [ ] Support basic triggernomic ratio functions sine, cosine & tangent as `sin`, `cos` & `tan`;
 - [ ] Support evaluate `steps` parameter to break evaluation steps into a `Vec<&str>`;
@@ -39,6 +39,7 @@ fn main() {
     }
 
     evaluate("(1 + 2) * 1 + 2"); // Returns Ok(5)
+    evaluate("-4 * 3");          // Returns Ok(-12)
 }
 ```
 
