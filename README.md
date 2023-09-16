@@ -1,5 +1,7 @@
 # Equation
 
+[![CI](https://github.com/davidrhyswhite/equation/actions/workflows/ci.yaml/badge.svg)](https://github.com/davidrhyswhite/equation/actions/workflows/ci.yaml)
+
 A Rust library for mathematical expression evaluation and simplification.
 
 ### TODO

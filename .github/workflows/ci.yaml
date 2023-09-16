@@ -1,4 +1,4 @@
-name: Equation CI
+name: CI
 
 on:
   push:
