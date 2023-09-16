@@ -1,4 +1,4 @@
-use crate::parser::{ExpressionParser, EquationRule as Rule, parse_expression};
+use crate::parser::{parse_expression, EquationRule as Rule, ExpressionParser};
 
 use pest::Parser;
 

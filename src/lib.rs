@@ -1,8 +1,8 @@
 #[macro_use]
 extern crate pest_derive;
 
-mod parser;
-mod operation;
 mod evaluator;
+mod operation;
+mod parser;
 
 pub use evaluator::evaluate;

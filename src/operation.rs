@@ -35,7 +35,6 @@ impl Operation {
     }
 }
 
-
 #[cfg(test)]
 mod tests {
     use super::*;

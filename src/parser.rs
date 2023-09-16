@@ -2,7 +2,7 @@ use crate::operation::Operation;
 
 use pest::{
     iterators::{Pair, Pairs},
-    pratt_parser::{PrattParser, Assoc, Op},
+    pratt_parser::{Assoc, Op, PrattParser},
 };
 
 /// Represents a parser derived from the grammar specified in "grammar.pest".
@@ -20,7 +20,7 @@ pub type EquationRule = Rule;
 
 /// Constructs and returns a `PrattParser` tailored for parsing arithmetic expressions.
 ///
-/// The parser is configured to recognize addition, subtraction, multiplication, and division 
+/// The parser is configured to recognize addition, subtraction, multiplication, and division
 /// as left-associative operations based on the rules specified in "grammar.pest".
 ///
 /// # Returns
@@ -33,7 +33,6 @@ fn retrieve_parser() -> PrattParser<Rule> {
         // Define multiplication and division as left associative operations.
         .op(Op::infix(Rule::multiply, Assoc::Left) | Op::infix(Rule::divide, Assoc::Left))
 }
-
 
 /// Evaluates the primary component of an arithmetic expression.
 ///
@@ -61,7 +60,7 @@ fn primary_parser(primary: Pair<Rule>) -> i32 {
     }
 }
 
-/// Evaluates an infix arithmetic operation given the left-hand side value (`lhs`), 
+/// Evaluates an infix arithmetic operation given the left-hand side value (`lhs`),
 /// the operation itself (`op`), and the right-hand side value (`rhs`).
 ///
 /// This function matches against known operations (`add`, `subtract`, `multiply`, `divide`)
