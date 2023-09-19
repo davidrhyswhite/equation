@@ -8,7 +8,7 @@ unary_minus = { "-" }
 primary = _{ unary_minus? ~ ( integer | "(" ~ expression ~ ")" ) }
 
 // 'operation' matches any one of the four basic arithmetic operations: add, subtract, multiply, or divide.
-operation = _{ add | subtract | multiply | divide }
+operation = _{ add | subtract | multiply | divide | exponentiation | modulo }
     // 'add' matches the addition operator.
 	add = { "+" }
     // 'subtract' matches the subtraction operator.
@@ -17,6 +17,10 @@ operation = _{ add | subtract | multiply | divide }
 	multiply = { "*" }
     // 'divide' matches the division operator.
 	divide = { "/" }
+    // 'exponentiation' matches the exponential operator.
+	exponentiation = { "^" | "exp" }
+    // 'modulo' matches the exponential operator.
+	modulo = { "%" | "mod" }
 
 // An 'expression' consists of a 'primary' followed by zero or more 'operation-primary' pairs.
 expression = { primary ~ (operation ~ primary)* }

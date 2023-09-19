@@ -31,7 +31,12 @@ fn retrieve_parser() -> PrattParser<Rule> {
         // Define addition and subtraction as left associative operations.
         .op(Op::infix(Rule::add, Assoc::Left) | Op::infix(Rule::subtract, Assoc::Left))
         // Define multiplication and division as left associative operations.
-        .op(Op::infix(Rule::multiply, Assoc::Left) | Op::infix(Rule::divide, Assoc::Left))
+        .op(
+            Op::infix(Rule::multiply, Assoc::Left) |
+                Op::infix(Rule::divide, Assoc::Left) |
+                Op::infix(Rule::exponentiation, Assoc::Left) |
+                Op::infix(Rule::modulo, Assoc::Left)
+            )
         // Define the unary minus as a prefix operation
         .op(Op::prefix(Rule::unary_minus))
 }
@@ -88,6 +93,8 @@ fn infix_parser(lhs: i32, op: Pair<Rule>, rhs: i32) -> i32 {
         Rule::subtract => Operation::Subtract.run(lhs, rhs),
         Rule::multiply => Operation::Multiply.run(lhs, rhs),
         Rule::divide => Operation::Divide.run(lhs, rhs),
+        Rule::exponentiation => Operation::Exponent.run(lhs, rhs),
+        Rule::modulo => Operation::Modulo.run(lhs, rhs),
         rule => unreachable!("parser expected infix operation, found {:?}", rule),
     }
 }

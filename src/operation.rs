@@ -8,6 +8,8 @@ pub enum Operation {
     Subtract,
     Multiply,
     Divide,
+    Exponent,
+    Modulo,
 }
 
 impl Operation {
@@ -31,6 +33,8 @@ impl Operation {
             Self::Subtract => lhs - rhs,
             Self::Multiply => lhs * rhs,
             Self::Divide => lhs / rhs,
+            Self::Exponent => lhs.pow(rhs.try_into().unwrap()),
+            Self::Modulo => lhs % rhs,
         }
     }
 }
