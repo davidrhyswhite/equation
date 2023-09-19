@@ -4,9 +4,6 @@ integer = @{ ASCII_DIGIT+ }
 // The - (unary minus) operator negates the value of the operand.
 unary_minus = { "-" }
 
-// A 'primary' matches either an 'integer' or an expression wrapped in parentheses.
-primary = _{ unary_minus? ~ ( integer | "(" ~ expression ~ ")" ) }
-
 // 'operation' matches any one of the four basic arithmetic operations: add, subtract, multiply, or divide.
 operation = _{ add | subtract | multiply | divide | exponentiation | modulo }
     // 'add' matches the addition operator.
@@ -22,8 +19,17 @@ operation = _{ add | subtract | multiply | divide | exponentiation | modulo }
     // 'modulo' matches the exponential operator.
 	modulo = { "%" | "mod" }
 
+// A rule for the function names.
+function_name = { "sin" | "cos" | "tan" }
+
+// A rule for the function call.
+function_call = { function_name ~ "(" ~ expression ~ ")" }
+
 // An 'expression' consists of a 'primary' followed by zero or more 'operation-primary' pairs.
 expression = { primary ~ (operation ~ primary)* }
+
+// A 'primary' matches either an 'integer', a function call, or an expression wrapped in parentheses.
+primary = _{ unary_minus? ~ ( integer | "(" ~ expression ~ ")" | function_call ) }
 
 // An 'equation' matches the start of input, followed by an 'expression', and then the end of input.
 equation = _{ SOI ~ expression ~ EOI }

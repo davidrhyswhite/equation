@@ -26,14 +26,14 @@ impl Operation {
     ///
     /// # Returns
     ///
-    /// Returns the result of the arithmetic operation as an `i32`.
-    pub fn run(&self, lhs: i32, rhs: i32) -> i32 {
+    /// Returns the result of the arithmetic operation as an `f64`.
+    pub fn run(&self, lhs: f64, rhs: f64) -> f64 {
         match self {
             Self::Add => lhs + rhs,
             Self::Subtract => lhs - rhs,
             Self::Multiply => lhs * rhs,
             Self::Divide => lhs / rhs,
-            Self::Exponent => lhs.pow(rhs.try_into().unwrap()),
+            Self::Exponent => lhs.powf(rhs.try_into().unwrap()),
             Self::Modulo => lhs % rhs,
         }
     }
@@ -46,24 +46,24 @@ mod tests {
     #[test]
     fn it_works_with_addition() {
         let operation = Operation::Add;
-        assert_eq!(operation.run(10, 2), 12);
+        assert_eq!(operation.run(10.0, 2.0), 12.0);
     }
 
     #[test]
     fn it_works_with_subtraction() {
         let operation = Operation::Subtract;
-        assert_eq!(operation.run(10, 2), 8);
+        assert_eq!(operation.run(10.0, 2.0), 8.0);
     }
 
     #[test]
     fn it_works_with_multiplication() {
         let operation = Operation::Multiply;
-        assert_eq!(operation.run(10, 2), 20);
+        assert_eq!(operation.run(10.0, 2.0), 20.0);
     }
 
     #[test]
     fn it_works_with_division() {
         let operation = Operation::Divide;
-        assert_eq!(operation.run(10, 2), 5);
+        assert_eq!(operation.run(10.0, 2.0), 5.0);
     }
 }

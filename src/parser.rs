@@ -1,3 +1,4 @@
+use crate::functions::Functions;
 use crate::operation::Operation;
 
 use pest::{
@@ -31,12 +32,10 @@ fn retrieve_parser() -> PrattParser<Rule> {
         // Define addition and subtraction as left associative operations.
         .op(Op::infix(Rule::add, Assoc::Left) | Op::infix(Rule::subtract, Assoc::Left))
         // Define multiplication and division as left associative operations.
-        .op(
-            Op::infix(Rule::multiply, Assoc::Left) |
-                Op::infix(Rule::divide, Assoc::Left) |
-                Op::infix(Rule::exponentiation, Assoc::Left) |
-                Op::infix(Rule::modulo, Assoc::Left)
-            )
+        .op(Op::infix(Rule::multiply, Assoc::Left)
+            | Op::infix(Rule::divide, Assoc::Left)
+            | Op::infix(Rule::exponentiation, Assoc::Left)
+            | Op::infix(Rule::modulo, Assoc::Left))
         // Define the unary minus as a prefix operation
         .op(Op::prefix(Rule::unary_minus))
 }
@@ -59,11 +58,61 @@ fn retrieve_parser() -> PrattParser<Rule> {
 /// # Panics
 ///
 /// This function will panic if an unrecognized rule is encountered, indicating an unexpected token in the expression.
-fn primary_parser(primary: Pair<Rule>) -> i32 {
+fn primary_parser(primary: Pair<Rule>) -> f64 {
     match primary.as_rule() {
-        Rule::integer => primary.as_str().parse::<i32>().unwrap(),
+        Rule::integer => primary.as_str().parse::<f64>().unwrap(),
         Rule::expression => parse_expression(primary.into_inner()),
+        Rule::function_call => parse_function_call(primary.into_inner()),
         rule => unreachable!("parse expected atom, found {:?}", rule),
+    }
+}
+
+/// Parses and evaluates a trigonometric function call based on the given rule pairs.
+///
+/// This function processes pairs representing a function call where the first pair
+/// is expected to be the function name (e.g., "sin", "cos", "tan") and the subsequent
+/// pairs represent the argument(s) to the function. The function argument is expected
+/// to be an angle in degrees, and the function returns the integer result of the
+/// trigonometric calculation.
+///
+/// # Arguments
+///
+/// * `pairs` - A mutable iterator of `Pairs<Rule>` where the first pair represents
+///   the function name and the subsequent pairs represent the function's argument(s).
+///
+/// # Returns
+///
+/// Returns the result of the trigonometric function call as an `f64`.
+/// The return value is truncated from a floating point representation.
+///
+/// # Panics
+///
+/// The function will panic if:
+///
+/// * The first pair does not represent a recognized function name.
+/// * There are unexpected or missing pairs for the function call.
+fn parse_function_call(mut pairs: Pairs<Rule>) -> f64 {
+    // First pair is the function name, second pair is the expression
+    let func_name = pairs.next().unwrap();
+    let arg_value = parse_expression(pairs);
+
+    match func_name.as_rule() {
+        Rule::function_name => match func_name.as_str() {
+            "sin" => Functions::Sin.run(arg_value),
+            "cos" => Functions::Cos.run(arg_value),
+            "tan" => Functions::Tan.run(arg_value),
+            "asin" => Functions::Asin.run(arg_value),
+            "acos" => Functions::Acos.run(arg_value),
+            "atan" => Functions::Atan.run(arg_value),
+            "sinh" => Functions::Sinh.run(arg_value),
+            "cosh" => Functions::Cosh.run(arg_value),
+            "tanh" => Functions::Tanh.run(arg_value),
+            "asinh" => Functions::Asinh.run(arg_value),
+            "acosh" => Functions::Acosh.run(arg_value),
+            "atanh" => Functions::Atanh.run(arg_value),
+            _ => unreachable!(),
+        },
+        _ => unreachable!(),
     }
 }
 
@@ -82,12 +131,12 @@ fn primary_parser(primary: Pair<Rule>) -> i32 {
 ///
 /// # Returns
 ///
-/// Returns the result of the arithmetic operation as an `i32`.
+/// Returns the result of the arithmetic operation as an `f64`.
 ///
 /// # Panics
 ///
 /// This function will panic if the provided `op` does not match a recognized arithmetic operation.
-fn infix_parser(lhs: i32, op: Pair<Rule>, rhs: i32) -> i32 {
+fn infix_parser(lhs: f64, op: Pair<Rule>, rhs: f64) -> f64 {
     match op.as_rule() {
         Rule::add => Operation::Add.run(lhs, rhs),
         Rule::subtract => Operation::Subtract.run(lhs, rhs),
@@ -112,12 +161,12 @@ fn infix_parser(lhs: i32, op: Pair<Rule>, rhs: i32) -> i32 {
 ///
 /// # Returns
 ///
-/// Returns the result of the prefix operation as an `i32`.
+/// Returns the result of the prefix operation as an `f64`.
 ///
 /// # Panics
 ///
 /// This function will panic if the provided `op` does not match a recognized prefix operation.
-fn prefix_parser(op: Pair<Rule>, rhs: i32) -> i32 {
+fn prefix_parser(op: Pair<Rule>, rhs: f64) -> f64 {
     match op.as_rule() {
         Rule::unary_minus => -rhs,
         _ => unreachable!(),
@@ -134,8 +183,8 @@ fn prefix_parser(op: Pair<Rule>, rhs: i32) -> i32 {
 ///
 /// # Returns
 ///
-/// * `i32` - The result of evaluating the expression.
-pub fn parse_expression(pairs: Pairs<Rule>) -> i32 {
+/// * `f64` - The result of evaluating the expression.
+pub fn parse_expression(pairs: Pairs<Rule>) -> f64 {
     retrieve_parser()
         .map_primary(primary_parser)
         .map_infix(infix_parser)

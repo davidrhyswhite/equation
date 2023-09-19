@@ -2,6 +2,7 @@
 extern crate pest_derive;
 
 mod evaluator;
+mod functions;
 mod operation;
 mod parser;
 
