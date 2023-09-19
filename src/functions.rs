@@ -55,72 +55,72 @@ mod tests {
     #[test]
     fn it_works_with_sin() {
         let func = Functions::Sin;
-        assert!(func.run(10.0) - -0.5440211108893698 < f64::EPSILON);
+        assert!((func.run(10.0) - -0.5440211108893698).abs() < f64::EPSILON);
     }
 
     #[test]
     fn it_works_with_cos() {
         let func = Functions::Cos;
-        assert!(func.run(10.0) - -0.8390715290764524 < f64::EPSILON);
+        assert!((func.run(10.0) - -0.8390715290764524).abs() < f64::EPSILON);
     }
 
     #[test]
     fn it_works_with_tan() {
         let func = Functions::Tan;
-        assert!(func.run(10.0) - 0.6483608274590867 < f64::EPSILON);
+        assert!((func.run(10.0) - 0.6483608274590867).abs() < f64::EPSILON);
     }
 
     #[test]
     fn it_works_with_asin() {
         let func = Functions::Asin;
-        assert!(func.run(0.5) - 0.5235987755982988 < f64::EPSILON);
+        assert!((func.run(0.5) - 0.5235987755982988).abs() < f64::EPSILON);
     }
 
     #[test]
     fn it_works_with_acos() {
         let func = Functions::Acos;
-        assert!(func.run(0.5) - 1.0471975511965976 < f64::EPSILON);
+        assert!((func.run(0.5) - 1.0471975511965976).abs() < f64::EPSILON);
     }
 
     #[test]
     fn it_works_with_atan() {
         let func = Functions::Atan;
-        assert!(func.run(10.0) - 1.4711276743037345 < f64::EPSILON);
+        assert!((func.run(10.0) - 1.4711276743037345).abs() < f64::EPSILON);
     }
 
     #[test]
     fn it_works_with_sinh() {
         let func = Functions::Sinh;
-        assert!(func.run(10.0) - 11013.232874703393 < f64::EPSILON);
+        assert!((func.run(10.0) - 11013.232874703393).abs() < f64::EPSILON);
     }
 
     #[test]
     fn it_works_with_cosh() {
         let func = Functions::Cosh;
-        assert!(func.run(10.0) - 11013.232920103323 < f64::EPSILON);
+        assert!((func.run(10.0) - 11013.232920103323).abs() < f64::EPSILON);
     }
 
     #[test]
     fn it_works_with_tanh() {
         let func = Functions::Tanh;
-        assert!(func.run(10.0) - 0.9999999958776927 < f64::EPSILON);
+        assert!((func.run(10.0) - 0.9999999958776927).abs() < f64::EPSILON);
     }
 
     #[test]
     fn it_works_with_asinh() {
         let func = Functions::Asinh;
-        assert!(func.run(10.0) - 2.99822295029797 < f64::EPSILON);
+        assert!((func.run(10.0) - 2.99822295029797).abs() < f64::EPSILON);
     }
 
     #[test]
     fn it_works_with_acosh() {
         let func = Functions::Acosh;
-        assert!(func.run(10.0) - 2.993222846126381 < f64::EPSILON);
+        assert!((func.run(10.0) - 2.993222846126381).abs() < f64::EPSILON);
     }
 
     #[test]
     fn it_works_with_atanh() {
         let func = Functions::Atanh;
-        assert!(func.run(0.5) - 0.5493061443340549 < f64::EPSILON);
+        assert!((func.run(0.5) - 0.5493061443340549).abs() < f64::EPSILON);
     }
 }

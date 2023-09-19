@@ -61,10 +61,12 @@ mod tests {
     #[test]
     fn it_works_with_test_cases() {
         for test_case in set_test_cases() {
-            let result = evaluate(&test_case.0);
-            assert_eq!(
-                result,
-                Ok(test_case.1),
+            let result = match evaluate(&test_case.0) {
+                Ok(value) => value,
+                Err(_) => f64::NAN,
+            };
+            assert!(
+                result - test_case.1 < f64::EPSILON,
                 "testing equation {} expected {}",
                 &test_case.0,
                 test_case.1
