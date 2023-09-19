@@ -11,6 +11,7 @@ A Rust library for mathematical expression evaluation and simplification.
 - [x] Unary minus operator support;
 - [x] Support fractions as ~~`f32`~~ `f64`;
 - [x] Support basic triggernomic ratio functions sine, cosine & tangent as `sin`, `cos` & `tan`;
+- [ ] Support mathematical constants `pi`, `e`, `tau`;
 - [ ] Support functions with additional arguments, `atan2(y, x)`;
 - [ ] Support evaluate `steps` parameter to break evaluation steps into a `Vec<&str>`;
 - [ ] Support simplification & evaluation of algebraic expressions;
