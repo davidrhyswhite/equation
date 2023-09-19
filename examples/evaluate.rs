@@ -18,4 +18,7 @@ fn main() {
     example("-4 - -2              ");
     example("2 exp 10             ");
     example("2 ^ 6                ");
+    example("@e                   ");
+    example("@pi                  ");
+    example("@tau                 ");
 }

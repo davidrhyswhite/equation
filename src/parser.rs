@@ -63,6 +63,12 @@ fn primary_parser(primary: Pair<Rule>) -> f64 {
         Rule::integer => primary.as_str().parse::<f64>().unwrap(),
         Rule::expression => parse_expression(primary.into_inner()),
         Rule::function_call => parse_function_call(primary.into_inner()),
+        Rule::constant => match primary.as_str() {
+            "@pi" => std::f64::consts::PI,
+            "@tau" => std::f64::consts::TAU,
+            "@e" => std::f64::consts::E,
+            _ => unreachable!("Unexpected constant"),
+        },
         rule => unreachable!("parse expected atom, found {:?}", rule),
     }
 }

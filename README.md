@@ -23,7 +23,7 @@ Add the following lines to your `Cargo.toml` dependencies:
 
 ```toml
 [dependencies]
-equation = "1.0.0"
+equation = "1.1.0"
 ```
 
 ## Examples
@@ -80,6 +80,16 @@ Returns the integer remainder of dividing the two operands.
 evaluate("10 % 2");   // Returns Ok(0.0)
 evaluate("10 % 4");   // Returns Ok(2.0)
 evaluate("10 mod 3"); // Returns Ok(1.0)
+```
+**Constants**
+
+Equation defines constants with an `@` symbol.
+
+```rust
+
+evaluate("@e");   // Returns Ok(2.718281828459045)
+evaluate("@pi");  // Returns Ok(3.141592653589793)
+evaluate("@tau"); // Returns Ok(6.283185307179586)
 ```
 
 **Triggernomic functions**

@@ -31,6 +31,7 @@ pub fn evaluate(expression: &str) -> Result<f64, pest::error::Error<Rule>> {
 #[cfg(test)]
 mod tests {
     use super::*;
+    use approx::assert_relative_eq;
     use std::collections::HashMap;
 
     fn set_test_cases() -> HashMap<&'static str, f64> {
@@ -53,6 +54,10 @@ mod tests {
             ("sin(45)", 0.8509035245341184),
             ("tan(30 + 15)", 1.6197751905438615),
             ("cos(90) + sin(45)", 0.40282990840494826),
+            // Constants
+            ("@e", std::f64::consts::E),
+            ("@pi", std::f64::consts::PI),
+            ("@tau", std::f64::consts::TAU),
         ]);
 
         test_cases
@@ -65,12 +70,7 @@ mod tests {
                 Ok(value) => value,
                 Err(_) => f64::NAN,
             };
-            assert!(
-                result - test_case.1 < f64::EPSILON,
-                "testing equation {} expected {}",
-                &test_case.0,
-                test_case.1
-            );
+            assert_relative_eq!(result, test_case.1, epsilon = f64::EPSILON);
         }
     }
 }

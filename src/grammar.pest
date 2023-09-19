@@ -4,6 +4,12 @@ integer = @{ ASCII_DIGIT+ }
 // The - (unary minus) operator negates the value of the operand.
 unary_minus = { "-" }
 
+// Rules for constants.
+constant = { pi | tau | e }
+pi = _{ "@pi" }
+tau = _{ "@tau" }
+e = _{ "@e" }
+
 // 'operation' matches any one of the four basic arithmetic operations: add, subtract, multiply, or divide.
 operation = _{ add | subtract | multiply | divide | exponentiation | modulo }
     // 'add' matches the addition operator.
@@ -29,7 +35,8 @@ function_call = { function_name ~ "(" ~ expression ~ ")" }
 expression = { primary ~ (operation ~ primary)* }
 
 // A 'primary' matches either an 'integer', a function call, or an expression wrapped in parentheses.
-primary = _{ unary_minus? ~ ( integer | "(" ~ expression ~ ")" | function_call ) }
+// primary = _{ unary_minus? ~ ( integer | "(" ~ expression ~ ")" | function_call ) }
+primary = _{ unary_minus? ~ ( integer | constant | "(" ~ expression ~ ")" | function_call ) }
 
 // An 'equation' matches the start of input, followed by an 'expression', and then the end of input.
 equation = _{ SOI ~ expression ~ EOI }
